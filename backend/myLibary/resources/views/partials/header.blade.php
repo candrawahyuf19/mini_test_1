@@ -20,4 +20,7 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/css/templatemo-topic-listing.css" rel="stylesheet">
+
+    {{-- datatable --}}
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.0/css/dataTables.dataTables.min.css">
 </head>

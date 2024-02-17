@@ -45,11 +45,11 @@
                                         <p class="mb-0">Borrow the books.</p>
                                     </div>
 
-                                    <span class="badge bg-design rounded-pill ms-auto">14</span>
+                                    {{-- <span class="badge bg-design rounded-pill ms-auto">14</span> --}}
                                 </div>
 
-                                <img src="images/topics/undraw_Remote_design_team_re_urdx.png"
-                                    class="custom-block-image img-fluid" alt="">
+                                <img src="assets/icon/read_book.svg" class="custom-block-image img-fluid"
+                                    alt="">
                             </a>
                         </div>
                     </div>
@@ -64,67 +64,93 @@
                                         <p class="mb-0">Return the books</p>
                                     </div>
 
-                                    <span class="badge bg-design rounded-pill ms-auto">14</span>
+                                    {{-- <span class="badge bg-design rounded-pill ms-auto">14</span> --}}
                                 </div>
 
-                                <img src="images/topics/undraw_Remote_design_team_re_urdx.png"
-                                    class="custom-block-image img-fluid" alt="">
+                                <img src="assets/icon/Library-rafiki.svg" class="custom-block-image img-fluid"
+                                    alt="">
                             </a>
                         </div>
                     </div>
-
-                    {{-- <div class="col-lg-6 col-12">
-                        <div class="custom-block custom-block-overlay">
-                            <div class="d-flex flex-column h-100">
-                                <img src="images/businesswoman-using-tablet-analysis.jpg"
-                                    class="custom-block-image img-fluid" alt="">
-
-                                <div class="custom-block-overlay-text d-flex">
-                                    <div>
-                                        <h5 class="text-white mb-2">Finance</h5>
-
-                                        <p class="text-white">Topic Listing Template includes homepage, listing page,
-                                            detail page, and contact page. You can feel free to edit and adapt for your
-                                            CMS requirements.</p>
-
-                                        <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">Learn
-                                            More</a>
-                                    </div>
-
-                                    <span class="badge bg-finance rounded-pill ms-auto">25</span>
-                                </div>
-
-                                <div class="social-share d-flex">
-                                    <p class="text-white me-4">Share:</p>
-
-                                    <ul class="social-icon">
-                                        <li class="social-icon-item">
-                                            <a href="#" class="social-icon-link bi-twitter"></a>
-                                        </li>
-
-                                        <li class="social-icon-item">
-                                            <a href="#" class="social-icon-link bi-facebook"></a>
-                                        </li>
-
-                                        <li class="social-icon-item">
-                                            <a href="#" class="social-icon-link bi-pinterest"></a>
-                                        </li>
-                                    </ul>
-
-                                    <a href="#" class="custom-icon bi-bookmark ms-auto"></a>
-                                </div>
-
-                                <div class="section-overlay"></div>
-                            </div>
-                        </div>
-                    </div> --}}
-
                 </div>
             </div>
         </section>
 
 
         @yield('mainContent')
+
+        <section class="timeline-section section-padding" id="section_3">
+            <div class="section-overlay"></div>
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12 text-center">
+                        <h2 class="text-white mb-4">How does it work?</h1>
+                    </div>
+
+                    <div class="col-lg-10 col-12 mx-auto">
+                        <div class="timeline-container">
+                            <ul class="vertical-scrollable-timeline" id="vertical-scrollable-timeline">
+                                <div class="list-progress">
+                                    <div class="inner"></div>
+                                </div>
+
+                                <li>
+                                    <h4 class="text-white mb-3">Search your favourite topic</h4>
+
+                                    <p class="text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                        Reiciendis, cumque magnam? Sequi, cupiditate quibusdam alias illum sed esse ad
+                                        dignissimos libero sunt, quisquam numquam aliquam? Voluptas, accusamus omnis?
+                                    </p>
+
+                                    <div class="icon-holder">
+                                        <i class="bi-search"></i>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <h4 class="text-white mb-3">Bookmark &amp; Borrow</h4>
+
+                                    <p class="text-white">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                                        Sint animi necessitatibus aperiam repudiandae nam omnis est vel quo, nihil
+                                        repellat quia velit error modi earum similique odit labore. Doloremque,
+                                        repudiandae?</p>
+
+                                    <div class="icon-holder">
+                                        <i class="bi-bookmark"></i>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <h4 class="text-white mb-3">Read &amp; Enjoy</h4>
+
+                                    <p class="text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                                        Animi vero quisquam, rem assumenda similique voluptas distinctio, iste est hic
+                                        eveniet debitis ut ducimus beatae id? Quam culpa deleniti officiis autem?</p>
+
+                                    <div class="icon-holder">
+                                        <i class="bi-book"></i>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <h4 class="text-white mb-3">Return it back</h4>
+
+                                    <p class="text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                                        Animi vero quisquam, rem assumenda similique voluptas distinctio, iste est hic
+                                        eveniet debitis ut ducimus beatae id? Quam culpa deleniti officiis autem?</p>
+
+                                    <div class="icon-holder">
+                                        <i class="bi bi-arrow-counterclockwise"></i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="contact-section section-padding section-bg" id="section_5">
             <div class="container">

@@ -16,3 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('landing_page.index');
 });
+
+Route::get('/login', function () {
+    return view('auth.login_page');
+});
+
+Route::get('/all_books', function () {
+    return view('admin.all_books');
+});
+
+Route::get('/categories', function () {
+    return view('admin.categories_books');
+});

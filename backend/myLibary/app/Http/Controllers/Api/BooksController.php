@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\CategoriesModel;
+use App\Models\BooksModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
-class CategoriesController extends Controller
+class BooksController extends Controller
 {
     public function index()
     {
-        $categories = CategoriesModel::orderBy("id_categories", "desc")->get();
+        $books = BooksModel::orderBy("id_books", "desc")->get();
 
-        $datatable = DataTables::of($categories)
+        $datatable = DataTables::of($books)
             ->addIndexColumn()
             ->toJson();
 
@@ -26,8 +26,12 @@ class CategoriesController extends Controller
         $validate = Validator::make(
             $request->all(),
             [
-                "name_cat" => "required",
-                "description" => "required",
+                "id_categories" => "required",
+                "title" => "required",
+                "author" => "required",
+                "bookcase" => "required",
+                "stock" => "required|numeric",
+                "cover" => "required",
             ]
         );
 
@@ -37,9 +41,9 @@ class CategoriesController extends Controller
                 "error" => $validate->errors(),
             ], 400);
         } else {
-            $data = $request->only("name_cat", "description");
+            $data = $request->only("id_categories", "title", "author", "bookcase", "stock", "cover");
 
-            CategoriesModel::create($data);
+            BooksModel::create($data);
 
             return response()->json([
                 "status" => 200,
@@ -48,30 +52,34 @@ class CategoriesController extends Controller
         }
     }
 
-    public function show(CategoriesModel $categoriesModel, string $id_categories)
+    public function show(string $id_books)
     {
-        $id_categories = $categoriesModel->find($id_categories);
+        $books = BooksModel::find($id_books);
 
-        if (empty($id_categories)) {
+        if (empty($books)) {
             return response()->json([
                 "status" => 400,
-                "msg" => "data kategori tidak ada",
+                "msg" => "data buku tidak ada",
             ], 400);
         } else {
             return response()->json([
                 "status" => 200,
-                "data" => $id_categories
+                "data" => $books
             ], 200);
         }
     }
 
-    public function update(Request $request, string $id_categories)
+    public function update(Request $request, string $id_books)
     {
         $validate = Validator::make(
             $request->all(),
             [
-                "name_cat" => "required",
-                "description" => "required",
+                "id_categories" => "required",
+                "title" => "required",
+                "author" => "required",
+                "bookcase" => "required",
+                "stock" => "required|numeric",
+                "cover" => "required",
             ]
         );
 
@@ -82,9 +90,9 @@ class CategoriesController extends Controller
                 "error" => $validate->errors(),
             ], 400);
         } else {
-            $data = $request->only("name_cat", "description");
+            $data = $request->only("id_categories", "title", "author", "bookcase", "stock", "cover");
 
-            CategoriesModel::where("id_categories", $id_categories)->update($data);
+            BooksModel::find($id_books)->update($data);
 
             return response()->json([
                 "status" => 200,
@@ -93,17 +101,17 @@ class CategoriesController extends Controller
         }
     }
 
-    public function destroy(string $id_categories)
+    public function destroy(string $id_books)
     {
-        $categories = CategoriesModel::where("id_categories", $id_categories)->first();
+        $books = BooksModel::where("id_books", $id_books)->first();
 
-        if (empty($categories)) {
+        if (empty($books)) {
             return response()->json([
                 "status" => 400,
                 "msg" => "Gagal dihapus, Data tidak ada",
             ], 400);
         } else {
-            $categories->delete();
+            $books->delete();
             return response()->json([
                 "status" => 200,
                 "msg" => "Berhasil dihapus",

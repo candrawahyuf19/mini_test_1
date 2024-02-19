@@ -14,7 +14,8 @@ class BorrowBooksModel extends Model
     protected $fillable = [
         "id_users",
         "borrowing_time",
-        "return_time",
+        "deadline_return_time",
+        "user_return_time",
         "status",
     ];
 }

@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
+use function Laravel\Prompts\select;
+
 class BorrowBooksController extends Controller
 {
     public function index()
@@ -46,11 +48,11 @@ class BorrowBooksController extends Controller
             DB::beginTransaction();
 
             $borrowing_time = $request->input("borrowing_time");
-            $return_time = Carbon::parse($borrowing_time)->addWeek();
+            $dl_return_time = Carbon::parse($borrowing_time)->addWeek();
             $borrowData = [
                 "id_users" => $request->input("id_users"),
                 "borrowing_time" => $borrowing_time,
-                "return_time" => $return_time,
+                "deadline_return_time" => $dl_return_time,
                 "status" => "borrow",
             ];
 
@@ -59,14 +61,13 @@ class BorrowBooksController extends Controller
             $listBookOutOfStock = [];
 
             foreach ($request->id_books as $bookId) {
-                // Periksa jumlah stok buku
+                // cek stok buku
                 $cekStok = DB::table("books")
                     ->select("title", "stock")
                     ->where("id_books", $bookId)
                     ->first();
 
                 if ($cekStok->stock > 0) {
-                    // Jika stok mencukupi, simpan detail peminjaman buku
                     BorrowBooksDetailModel::create([
                         "id_borrow" => $borrow->id_borrow,
                         "id_books" => $bookId
@@ -77,13 +78,12 @@ class BorrowBooksController extends Controller
                         ->where("id_books", $bookId)
                         ->decrement("stock");
                 } else {
-                    // Jika stok tidak mencukupi, tambahkan informasi buku ke array
+
                     $listBookOutOfStock[] = $cekStok->title;
                 }
             }
 
             if (!empty($listBookOutOfStock)) {
-                // Jika ada buku yang stoknya tidak mencukupi, kembalikan pesan kesalahan beserta nama-nama buku tersebut
                 DB::rollback();
                 return response()->json([
                     "status" => 400,
@@ -91,7 +91,6 @@ class BorrowBooksController extends Controller
                     "list_books" => $listBookOutOfStock
                 ], 400);
             } else {
-                // Jika semua buku memiliki stok yang mencukupi, commit transaksi
                 DB::commit();
                 return response()->json([
                     "status" => 200,
@@ -108,72 +107,38 @@ class BorrowBooksController extends Controller
         }
     }
 
+    public function list_borrow_byUser(Request $request)
+    {
+        $id_users = $request->input("id_users");
 
+        if ($id_users) {
+            $list_book = DB::table("borrow_books")
+                ->join("borrow_books_detail as bd", "bd.id_borrow", "=", "borrow_books.id_borrow")
+                ->where("borrow_books.id_users", $id_users)
+                ->select("*")
+                ->get();
 
-    // public function show(string $id_books)
-    // {
-    //     $books = BooksModel::find($id_books);
-
-    //     if (empty($books)) {
-    //         return response()->json([
-    //             "status" => 400,
-    //             "msg" => "data buku tidak ada",
-    //         ], 400);
-    //     } else {
-    //         return response()->json([
-    //             "status" => 200,
-    //             "data" => $books
-    //         ], 200);
-    //     }
-    // }
+            return response()->json([
+                "status" => 200,
+                "msg" => "terdapat buku",
+                "data" => $list_book,
+            ], 200);
+        } else {
+            return response()->json([
+                "status" => 400,
+                "msg" => "belum meminjam buku",
+            ], 400);
+            // dd($list_book);
+        }
+    }
 
     // public function update(Request $request, string $id_books)
     // {
-    //     $validate = Validator::make(
-    //         $request->all(),
-    //         [
-    //             "id_categories" => "required",
-    //             "title" => "required",
-    //             "author" => "required",
-    //             "bookcase" => "required",
-    //             "stock" => "required|numeric",
-    //             "cover" => "required",
-    //         ]
-    //     );
-
-    //     if ($validate->fails()) {
-    //         return response()->json([
-    //             "status" => 400,
-    //             "msg" => "Gagal diubah",
-    //             "error" => $validate->errors(),
-    //         ], 400);
-    //     } else {
-    //         $data = $request->only("id_categories", "title", "author", "bookcase", "stock", "cover");
-
-    //         BooksModel::find($id_books)->update($data);
-
-    //         return response()->json([
-    //             "status" => 200,
-    //             "msg" => "Berhasil diubah"
-    //         ], 200);
-    //     }
+    //     
     // }
 
     // public function destroy(string $id_books)
     // {
-    //     $books = BooksModel::where("id_books", $id_books)->first();
-
-    //     if (empty($books)) {
-    //         return response()->json([
-    //             "status" => 400,
-    //             "msg" => "Gagal dihapus, Data tidak ada",
-    //         ], 400);
-    //     } else {
-    //         $books->delete();
-    //         return response()->json([
-    //             "status" => 200,
-    //             "msg" => "Berhasil dihapus",
-    //         ], 200);
-    //     }
+    //    
     // }
 }
